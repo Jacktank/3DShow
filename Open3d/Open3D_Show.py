@@ -163,12 +163,12 @@ class O3DShow(TemplateO3DShow):
             self.show_distance_dict['rendered_circle_geos'].clear()
 
             pred_file_full_name = self.pred_datas[self.frame_idx]
-            pred_file_name = pred_file_full_name.split('/')[-1].split('.')[0] + self.pcd_ext
+            pcd_file_name = pred_file_full_name.split('/')[-1].split('.')[0] + self.pcd_ext
 
-            pcd_file_full_name = os.path.join(self.pcd_path, pred_file_name)
+            pcd_file_full_name = os.path.join(self.pcd_path, pcd_file_name)
 
             print('-------------------- frame idx: ', self.frame_idx, ' --------------------')
-            print('pcd_file_name: ', pred_file_name)
+            print('pcd_file_name: ', pcd_file_name)
 
             # load pcd file
             if self.pcd_ext == '.bin':
