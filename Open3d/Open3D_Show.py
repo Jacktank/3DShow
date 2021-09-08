@@ -118,7 +118,7 @@ class O3DShow(TemplateO3DShow):
             vis.poll_events()
             vis.update_renderer()
             # Capture image
-            pred_file_full_name = self.pred_datas[self.frame_idx]
+            pred_file_full_name = self.pred_datas[self.frame_idx-1]
             pred_file_name = pred_file_full_name.split('/')[-1].split('.')[0]
             save_image_name = os.path.join(self.capture_save_path, str(pred_file_name) + '_' + str(self.capture_frame_count)) + '.png'
             vis.capture_screen_image(save_image_name)
