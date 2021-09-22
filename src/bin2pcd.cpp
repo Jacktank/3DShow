@@ -70,7 +70,7 @@ int main(int argc, char **argv){
         // input.read((char *) &ring, sizeof(float));
         // input.read((char *) &ring, sizeof(float));
 		points->push_back(point);
-		std::cout << point.x << ", " << point.y << ", " << point.z << ", " << point.intensity << std::endl;
+		// std::cout << point.x << ", " << point.y << ", " << point.z << ", " << point.intensity << std::endl;
 	}
 	input.close();
  

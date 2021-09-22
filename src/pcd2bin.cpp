@@ -20,6 +20,26 @@
 using namespace pcl;
 using namespace std;
  
+struct MyPointType
+{
+  float x;
+  float y;
+  float z;
+  u_int intensity;
+  double timestamp;
+  u_short ring;
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW     // make sure our new allocators are aligned
+} EIGEN_ALIGN16;                    // enforce SSE padding for correct memory alignment
+
+POINT_CLOUD_REGISTER_POINT_STRUCT (MyPointType,           // here we assume a XYZ + "test" (as fields)
+                                   (float, x, x)
+                                   (float, y, y)
+                                   (float, z, z)
+                                   (u_int, intensity, intensity)
+                                   (double, timestamp, timestamp)
+                                   (u_short, ring, ring)
+)
+
 namespace po = boost::program_options;
  
 int main(int argc, char **argv){
@@ -53,8 +73,8 @@ int main(int argc, char **argv){
 	// load point cloud
 	fstream bin_file(outfile, ios::out | ios::binary);
 	
-	pcl::PointCloud<pcl::PointXYZI>::Ptr basic_cloud_ptr(new pcl::PointCloud<pcl::PointXYZI>);
-	if (pcl::io::loadPCDFile<pcl::PointXYZI> (infile, *basic_cloud_ptr) == -1) {
+	pcl::PointCloud<MyPointType>::Ptr basic_cloud_ptr(new pcl::PointCloud<MyPointType>);
+	if (pcl::io::loadPCDFile<MyPointType> (infile, *basic_cloud_ptr) == -1) {
 		std::cout << "Couldn't read file " << infile << std::endl;
 		return -1;
 	}
@@ -62,8 +82,11 @@ int main(int argc, char **argv){
 	for (size_t i = 0; i < basic_cloud_ptr->points.size (); ++i)
 	{
 		// bin_file<<std::setprecision(5);
-        bin_file.write((char*)&basic_cloud_ptr->points[i].x, 3*sizeof(float)); 
-       	bin_file.write((char*)&basic_cloud_ptr->points[i].intensity, sizeof(float));
+        bin_file.write((char*)&basic_cloud_ptr->points[i].x, sizeof(float));
+        bin_file.write((char*)&basic_cloud_ptr->points[i].y, sizeof(float));
+        bin_file.write((char*)&basic_cloud_ptr->points[i].z, sizeof(float));
+
+       	bin_file.write((char*)&basic_cloud_ptr->points[i].intensity, sizeof(u_int));
         // std::cout<< basic_cloud_ptr->points[i].x << ", " << basic_cloud_ptr->points[i].y << ", " << basic_cloud_ptr->points[i].z << ", " << basic_cloud_ptr->points[i].intensity << endl;
 	}
 	bin_file.close();
