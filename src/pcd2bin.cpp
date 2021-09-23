@@ -25,7 +25,7 @@ struct MyPointType
   float x;
   float y;
   float z;
-  u_int intensity;
+  u_char intensity;
   double timestamp;
   u_short ring;
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW     // make sure our new allocators are aligned
@@ -35,7 +35,7 @@ POINT_CLOUD_REGISTER_POINT_STRUCT (MyPointType,           // here we assume a XY
                                    (float, x, x)
                                    (float, y, y)
                                    (float, z, z)
-                                   (u_int, intensity, intensity)
+                                   (u_char, intensity, intensity)
                                    (double, timestamp, timestamp)
                                    (u_short, ring, ring)
 )
@@ -86,7 +86,7 @@ int main(int argc, char **argv){
         bin_file.write((char*)&basic_cloud_ptr->points[i].y, sizeof(float));
         bin_file.write((char*)&basic_cloud_ptr->points[i].z, sizeof(float));
 
-       	bin_file.write((char*)&basic_cloud_ptr->points[i].intensity, sizeof(u_int));
+       	bin_file.write((char*)&basic_cloud_ptr->points[i].intensity, sizeof(u_char));
         // std::cout<< basic_cloud_ptr->points[i].x << ", " << basic_cloud_ptr->points[i].y << ", " << basic_cloud_ptr->points[i].z << ", " << basic_cloud_ptr->points[i].intensity << endl;
 	}
 	bin_file.close();
