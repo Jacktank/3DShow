@@ -40,7 +40,7 @@ void convert_pcd_to_bin(int n, int num_threads, std::vector<std::string> lines, 
 	int num_line_per_thread = lines.size() / num_threads + 1;
 	int aaa = (n - 1) * num_line_per_thread;
 	int bbb = n * num_line_per_thread;
-	bbb = lines.size() - 1 < bbb ? lines.size() - 1: bbb;
+	bbb = lines.size() < bbb ? lines.size(): bbb;
 	std::this_thread::sleep_for(std::chrono::seconds(n));
 	std::cout << "hello thread "
         << std::this_thread::get_id()
